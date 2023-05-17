@@ -101,7 +101,7 @@ class TestClass(unittest.TestCase):
             == "true"
         )
 
-    def test_ceating_account_password_to_low_characters(self):
+    def test_ceating_account_password_to_short(self):
         driver = self.driver
         wait = self.wait
         driver.get("https://magento.softwaretestingboard.com/")
@@ -113,7 +113,7 @@ class TestClass(unittest.TestCase):
         driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
             "johndoe@xye.com"
         )
-        for password_length in range(8):
+        for password_length in range(7):
             driver.find_element(By.XPATH, '//input[@id="password"]').send_keys("a")
             sleep(0.5)
             password_length += 1
@@ -125,6 +125,25 @@ class TestClass(unittest.TestCase):
             else:
                 assert False
         assert True
+
+    def test_ceating_account_password_no_special_char(self):
+        driver = self.driver
+        wait = self.wait
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
+            "johndoe@xye.com"
+        )
+        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys("aaaaaaaa")
+        sleep(2)
+        assert (
+            driver.find_element(By.XPATH, '//*[@id="password-error"]').text
+            == "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
+        )
 
 
 def tearDown(self):
