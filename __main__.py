@@ -17,7 +17,7 @@ class TestClass(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.action = webdriver.ActionChains(self.driver)
-        self.wait = WebDriverWait(self.driver, 5)
+        self.wait = WebDriverWait(self.driver, 2)
         self.driver.implicitly_wait(5)
 
     def test_website_opening(self):
@@ -128,7 +128,6 @@ class TestClass(unittest.TestCase):
 
     def test_ceating_account_password_no_special_char(self):
         driver = self.driver
-        wait = self.wait
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
@@ -143,6 +142,33 @@ class TestClass(unittest.TestCase):
         assert (
             driver.find_element(By.XPATH, '//*[@id="password-error"]').text
             == "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
+        )
+
+    def test_ceating_account_password_not_match(self):
+        driver = self.driver
+        wait = self.wait
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
+            "johndoe@xye.com"
+        )
+        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+            "VeryDifficultPassword123"
+        )
+        driver.find_element(By.XPATH, '//*[@id="password-confirmation"]').send_keys(
+            "VeryDifficultPassword321"
+        )
+        driver.find_element(
+            By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
+        ).click()
+        sleep(2)
+        assert (
+            driver.find_element(By.XPATH, '//*[@id="password-confirmation-error"]').text
+            == "Please enter the same value again."
         )
 
 
