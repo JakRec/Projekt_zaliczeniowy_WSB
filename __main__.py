@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 # from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from time import sleep
+import testing_data
 
 
 class TestClass(unittest.TestCase):
@@ -19,27 +20,30 @@ class TestClass(unittest.TestCase):
         self.action = webdriver.ActionChains(self.driver)
         self.wait = WebDriverWait(self.driver, 2)
         self.driver.implicitly_wait(5)
+        self.dane = testing_data
 
     def test_website_opening(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         assert driver.title == "Home Page"
 
-    def test_ceating_account_no_name(self):
+    def test_creating_account_no_name(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_firstname()
+        )
         driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            "johndoe@xye.com"
+            self.dane.test_mail()
         )
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(By.XPATH, '//input[@id="password-confirmation"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(
             By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
@@ -57,15 +61,17 @@ class TestClass(unittest.TestCase):
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
         driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            "johndoe@xye.com"
+            self.dane.test_mail()
         )
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(By.XPATH, '//input[@id="password-confirmation"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(
             By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
@@ -83,13 +89,17 @@ class TestClass(unittest.TestCase):
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(By.XPATH, '//input[@id="password-confirmation"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(
             By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
@@ -108,10 +118,14 @@ class TestClass(unittest.TestCase):
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
         driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            "johndoe@xye.com"
+            self.dane.test_mail()
         )
         for password_length in range(7):
             driver.find_element(By.XPATH, '//input[@id="password"]').send_keys("a")
@@ -132,10 +146,14 @@ class TestClass(unittest.TestCase):
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
         driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            "johndoe@xye.com"
+            self.dane.test_mail()
         )
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys("aaaaaaaa")
         sleep(2)
@@ -151,16 +169,20 @@ class TestClass(unittest.TestCase):
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys("John")
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys("Doe")
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
         driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            "johndoe@xye.com"
+            self.dane.test_mail()
         )
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
-            "VeryDifficultPassword123"
+            self.dane.test_password()
         )
         driver.find_element(By.XPATH, '//*[@id="password-confirmation"]').send_keys(
-            "VeryDifficultPassword321"
+            self.dane.test_password() + "a"
         )
         driver.find_element(
             By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
