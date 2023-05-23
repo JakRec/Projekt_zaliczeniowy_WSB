@@ -1,18 +1,22 @@
 from faker import Faker
 
-fake = Faker()
+fake = Faker(locale="pl_PL")
+
+print(fake.first_name())
+print(fake.last_name())
+print(fake.email())
 
 
 def test_firstname():
-    return "John"
+    return fake.first_name()
 
 
 def test_surname():
-    return "Doe"
+    return fake.last_name()
 
 
 def test_mail():
-    return "mail@domain.com"
+    return fake.email()
 
 
 def test_password():
