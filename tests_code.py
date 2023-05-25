@@ -193,6 +193,110 @@ class TestClass(unittest.TestCase):
             == "Please enter the same value again."
         )
 
+    def test_ceating_account_password_weak(self):
+        driver = self.driver
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
+            self.dane.test_mail()
+        )
+        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+            self.dane.test_password_ok_weak()
+        )
+        sleep(2)
+        assert (
+            driver.find_element(
+                By.XPATH, '//*[@id="password-strength-meter-label"]'
+            ).text
+            == "Weak"
+        )
+
+    def test_ceating_account_password_medium(self):
+        driver = self.driver
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
+            self.dane.test_mail()
+        )
+        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+            self.dane.test_password_ok_medium()
+        )
+        sleep(2)
+        assert (
+            driver.find_element(
+                By.XPATH, '//*[@id="password-strength-meter-label"]'
+            ).text
+            == "Medium"
+        )
+
+    def test_ceating_account_password_strong(self):
+        driver = self.driver
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
+            self.dane.test_mail()
+        )
+        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+            self.dane.test_password_ok_strong()
+        )
+        sleep(2)
+        assert (
+            driver.find_element(
+                By.XPATH, '//*[@id="password-strength-meter-label"]'
+            ).text
+            == "Strong"
+        )
+
+    def test_ceating_account_password_very_strong(self):
+        driver = self.driver
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+            self.dane.test_firstname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+            self.dane.test_surname()
+        )
+        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
+            self.dane.test_mail()
+        )
+        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+            self.dane.test_password_ok_very_strong()
+        )
+        sleep(2)
+        assert (
+            driver.find_element(
+                By.XPATH, '//*[@id="password-strength-meter-label"]'
+            ).text
+            == "Very Strong"
+        )
+
 
 def tearDown(self):
     self.driver.close()
