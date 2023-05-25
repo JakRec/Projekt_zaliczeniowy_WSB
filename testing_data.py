@@ -2,9 +2,9 @@ from faker import Faker
 
 fake = Faker(locale="pl_PL")
 
-print(fake.first_name())
-print(fake.last_name())
-print(fake.email())
+# print(fake.first_name())
+# print(fake.last_name())
+# print(fake.email())
 
 
 def test_firstname():
