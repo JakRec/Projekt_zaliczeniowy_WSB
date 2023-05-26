@@ -41,6 +41,13 @@ def goto_account_data(self):
     ).click()
 
 
+def goto_shipping_adress_page(self):
+    driver = self.driver
+    driver.find_element(
+        By.XPATH, '//*[@data-ui-id="default-shipping-edit-link"]'
+    ).click()
+
+
 class TestClass(unittest.TestCase):
     driver = webdriver.Chrome()
 
@@ -373,14 +380,11 @@ class TestClass(unittest.TestCase):
             "mail"
         )
 
-    def test_delivery_adress_no_name(self):
+    def test_delivery_adress_no_firstname(self):
         driver = self.driver
         login_to_account(self)
         goto_account_data(self)
-        driver.find_element(
-            By.XPATH, '//*[@data-ui-id="default-shipping-edit-link"]'
-        ).click()
-        # cleaning the form from name and surname
+        goto_shipping_adress_page(self)
         driver.find_element(By.XPATH, '//*[@id="firstname"]').clear()
         driver.find_element(By.XPATH, '//*[@id="telephone"]').send_keys(
             self.dane.account_data_valid("phone")
@@ -403,6 +407,107 @@ class TestClass(unittest.TestCase):
         driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="firstname-error"]')
+
+    def test_delivery_adress_no_lastname(self):
+        driver = self.driver
+        login_to_account(self)
+        goto_account_data(self)
+        goto_shipping_adress_page(self)
+        driver.find_element(By.XPATH, '//*[@id="lastname"]').clear()
+        driver.find_element(By.XPATH, '//*[@id="telephone"]').send_keys(
+            self.dane.account_data_valid("phone")
+        )
+        driver.find_element(By.XPATH, '//*[@id="street_1"]').send_keys(
+            self.dane.account_data_valid("adress")
+        )
+        driver.find_element(By.XPATH, '//*[@id="city"]').send_keys(
+            self.dane.account_data_valid("city")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="region_id"]')
+        ).select_by_visible_text("Arizona")
+        driver.find_element(By.XPATH, '//*[@id="zip"]').send_keys(
+            self.dane.account_data_valid("postal_code")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="country"]')
+        ).select_by_visible_text("United States")
+        driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
+        sleep(1)
+        assert driver.find_element(By.XPATH, '//*[@id="lastname-error"]')
+
+    def test_delivery_adress_no_phone_number(self):
+        driver = self.driver
+        login_to_account(self)
+        goto_account_data(self)
+        goto_shipping_adress_page(self)
+        driver.find_element(By.XPATH, '//*[@id="street_1"]').send_keys(
+            self.dane.account_data_valid("adress")
+        )
+        driver.find_element(By.XPATH, '//*[@id="city"]').send_keys(
+            self.dane.account_data_valid("city")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="region_id"]')
+        ).select_by_visible_text("Arizona")
+        driver.find_element(By.XPATH, '//*[@id="zip"]').send_keys(
+            self.dane.account_data_valid("postal_code")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="country"]')
+        ).select_by_visible_text("United States")
+        driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
+        sleep(1)
+        assert driver.find_element(By.XPATH, '//*[@id="telephone-error"]')
+
+    def test_delivery_adress_no_adress(self):
+        # error occurs only with no input in first row
+        driver = self.driver
+        login_to_account(self)
+        goto_account_data(self)
+        goto_shipping_adress_page(self)
+        driver.find_element(By.XPATH, '//*[@id="telephone"]').send_keys(
+            self.dane.account_data_valid("phone")
+        )
+        driver.find_element(By.XPATH, '//*[@id="city"]').send_keys(
+            self.dane.account_data_valid("city")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="region_id"]')
+        ).select_by_visible_text("Arizona")
+        driver.find_element(By.XPATH, '//*[@id="zip"]').send_keys(
+            self.dane.account_data_valid("postal_code")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="country"]')
+        ).select_by_visible_text("United States")
+        driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
+        sleep(1)
+        assert driver.find_element(By.XPATH, '//*[@id="street_1-error"]')
+
+    def test_delivery_adress_no_city(self):
+        driver = self.driver
+        login_to_account(self)
+        goto_account_data(self)
+        goto_shipping_adress_page(self)
+        driver.find_element(By.XPATH, '//*[@id="street_1"]').send_keys(
+            self.dane.account_data_valid("adress")
+        )
+        driver.find_element(By.XPATH, '//*[@id="telephone"]').send_keys(
+            self.dane.account_data_valid("phone")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="region_id"]')
+        ).select_by_visible_text("Arizona")
+        driver.find_element(By.XPATH, '//*[@id="zip"]').send_keys(
+            self.dane.account_data_valid("postal_code")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="country"]')
+        ).select_by_visible_text("United States")
+        driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
+        sleep(1)
+        assert driver.find_element(By.XPATH, '//*[@id="city-error"]')
 
 
 def tearDown(self):
