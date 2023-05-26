@@ -10,13 +10,42 @@ from selenium.webdriver.common.by import By
 # from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.select import Select
 from time import sleep
 import testing_data
 
 
+def login_to_account(self):
+    driver = self.driver
+    driver.get("https://magento.softwaretestingboard.com/")
+    driver.find_element(
+        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
+    ).click()
+    driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
+        self.dane.account_data_valid("mail")
+    )
+    driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
+        self.dane.account_data_valid("password")
+    )
+    driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
+    sleep(2)
+
+
+def goto_account_data(self):
+    driver = self.driver
+    driver.find_element(
+        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/span/button"
+    ).click()
+    driver.find_element(
+        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/div/ul/li[1]/a"
+    ).click()
+
+
 class TestClass(unittest.TestCase):
+    driver = webdriver.Chrome()
+
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        # self.driver = webdriver.Chrome()
         self.action = webdriver.ActionChains(self.driver)
         self.wait = WebDriverWait(self.driver, 2)
         self.driver.implicitly_wait(5)
@@ -298,7 +327,7 @@ class TestClass(unittest.TestCase):
         )
 
     def test_login_to_existing_account(self):
-        driver = webdriver.Chrome()
+        driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
@@ -324,19 +353,8 @@ class TestClass(unittest.TestCase):
         )
 
     def test_user_data_viability_check(self):
-        driver = webdriver.Chrome()
-        driver.get("https://magento.softwaretestingboard.com/")
-        driver.find_element(
-            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
-        ).click()
-        driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
-            self.dane.account_data_valid("mail")
-        )
-        driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
-            self.dane.account_data_valid("password")
-        )
-        driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
-        sleep(4)
+        driver = self.driver
+        login_to_account(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/span/button"
         ).click()
@@ -354,6 +372,37 @@ class TestClass(unittest.TestCase):
         ) + "\n" + self.dane.account_data_valid(
             "mail"
         )
+
+    def test_delivery_adress_no_name(self):
+        driver = self.driver
+        login_to_account(self)
+        goto_account_data(self)
+        driver.find_element(
+            By.XPATH, '//*[@data-ui-id="default-shipping-edit-link"]'
+        ).click()
+        # cleaning the form from name and surname
+        driver.find_element(By.XPATH, '//*[@id="firstname"]').clear()
+        driver.find_element(By.XPATH, '//*[@id="telephone"]').send_keys(
+            self.dane.account_data_valid("phone")
+        )
+        driver.find_element(By.XPATH, '//*[@id="street_1"]').send_keys(
+            self.dane.account_data_valid("adress")
+        )
+        driver.find_element(By.XPATH, '//*[@id="city"]').send_keys(
+            self.dane.account_data_valid("city")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="region_id"]')
+        ).select_by_visible_text("Arizona")
+        driver.find_element(By.XPATH, '//*[@id="zip"]').send_keys(
+            self.dane.account_data_valid("postal_code")
+        )
+        Select(
+            driver.find_element(By.XPATH, '//*[@id="country"]')
+        ).select_by_visible_text("United States")
+        driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
+        sleep(1)
+        assert driver.find_element(By.XPATH, '//*[@id="firstname-error"]')
 
 
 def tearDown(self):

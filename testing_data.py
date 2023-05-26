@@ -56,3 +56,13 @@ def account_data_valid(credential_type):
         return "johndoe@xyb.com"
     elif credential_type == "password":
         return "ndeNZ.eJN5kEGdp"
+    elif credential_type == "phone":
+        return "123456789"
+    elif credential_type == "company":
+        return "BestCompany Ltd"
+    elif credential_type == "adress":
+        return "Long Street 123"
+    elif credential_type == "city":
+        return "London"
+    elif credential_type == "postal_code":
+        return "12345"
