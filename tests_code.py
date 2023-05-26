@@ -403,7 +403,7 @@ class TestClass(unittest.TestCase):
         )
         Select(
             driver.find_element(By.XPATH, '//*[@id="country"]')
-        ).select_by_visible_text("United States")
+        ).select_by_visible_text(self.dane.account_data_valid("country"))
         driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="firstname-error"]')
@@ -431,7 +431,7 @@ class TestClass(unittest.TestCase):
         )
         Select(
             driver.find_element(By.XPATH, '//*[@id="country"]')
-        ).select_by_visible_text("United States")
+        ).select_by_visible_text(self.dane.account_data_valid("country"))
         driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="lastname-error"]')
@@ -455,7 +455,7 @@ class TestClass(unittest.TestCase):
         )
         Select(
             driver.find_element(By.XPATH, '//*[@id="country"]')
-        ).select_by_visible_text("United States")
+        ).select_by_visible_text(self.dane.account_data_valid("country"))
         driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="telephone-error"]')
@@ -480,7 +480,7 @@ class TestClass(unittest.TestCase):
         )
         Select(
             driver.find_element(By.XPATH, '//*[@id="country"]')
-        ).select_by_visible_text("United States")
+        ).select_by_visible_text(self.dane.account_data_valid("country"))
         driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="street_1-error"]')
@@ -504,7 +504,7 @@ class TestClass(unittest.TestCase):
         )
         Select(
             driver.find_element(By.XPATH, '//*[@id="country"]')
-        ).select_by_visible_text("United States")
+        ).select_by_visible_text(self.dane.account_data_valid("country"))
         driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="city-error"]')

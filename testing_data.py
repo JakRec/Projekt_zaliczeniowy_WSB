@@ -66,3 +66,5 @@ def account_data_valid(credential_type):
         return "London"
     elif credential_type == "postal_code":
         return "12345"
+    elif credential_type == "country":
+        return "United States"
