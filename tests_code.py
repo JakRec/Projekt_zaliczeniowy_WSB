@@ -48,6 +48,20 @@ def goto_shipping_adress_page(self):
     ).click()
 
 
+def clean_cart(self):
+    driver = self.driver
+    sleep(2)
+    # cleaning
+    driver.find_element(
+        By.XPATH, '//*[@id="mini-cart"]/li[1]/div/div/div[3]/div[2]/a'
+    ).click()
+    sleep(2)
+    driver.find_element(
+        By.XPATH, "/html/body/div[3]/aside[2]/div[2]/footer/button[2]"
+    ).click()
+    sleep(3)
+
+
 class TestClass(unittest.TestCase):
     driver = webdriver.Chrome()
 
@@ -509,6 +523,49 @@ class TestClass(unittest.TestCase):
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="city-error"]')
 
+    def test_cart_adding(self):
+        driver = self.driver
+        login_to_account(self)
+        sleep(2)
+        driver.find_element(By.XPATH, '//*[@class="action showcart"]').click()
+        sleep(1)
+        if (
+            driver.find_element(
+                By.XPATH, '//*[@id="minicart-content-wrapper"]/div[2]/strong'
+            ).text
+            != "You have no items in your shopping cart."
+        ):
+            print("czyczenie koszyka")
+            clean_cart(self)
+            print("wyczyszczono koszyk")
+        else:
+            pass
+        driver.find_element(
+            By.XPATH, '//*[@id="option-label-size-143-item-166"]'
+        ).click()
+        driver.find_element(
+            By.XPATH, '//*[@id="option-label-color-93-item-50"]'
+        ).click()
+        driver.find_element(
+            By.XPATH,
+            '//*[@id="maincontent"]/div[3]/div/div[2]/div[3]/div/div/ol/li[1]/div/div/div[4]/div/div[1]/form/button',
+        ).click()
+        sleep(3)
+        print(
+            driver.find_element(
+                By.XPATH,
+                "/html/body/div[1]/header/div[2]/div[1]/a/span[2]/span[1]",
+            ).text
+        )
+        assert (
+            int(
+                driver.find_element(
+                    By.XPATH, "/html/body/div[1]/header/div[2]/div[1]/a/span[2]/span[1]"
+                ).text
+            )
+            == 1
+        )
+
 
 def tearDown(self):
     self.driver.close()
@@ -530,7 +587,7 @@ if __name__ == "__main__":
         el3 = driver.find_element(By.XPATH, '//input[@id="lastname"]')
         el3.send_keys("Doe")
         el4 = driver.find_element(By.XPATH, '//input[@id="email_address"]')
-        el4.send_keys("johndoe@xye.com")
+        el4.send_keys("johndoe@xyb.com")
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
             "VeryDifficultPassword123"
         )
