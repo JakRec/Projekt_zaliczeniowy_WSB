@@ -18,16 +18,30 @@ import testing_data
 def login_to_account(self):
     driver = self.driver
     driver.get("https://magento.softwaretestingboard.com/")
-    driver.find_element(
-        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
-    ).click()
-    driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
-        self.dane.account_data_valid("mail")
+    print(
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
+        ).text
     )
-    driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
-        self.dane.account_data_valid("password")
-    )
-    driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
+    if (
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
+        ).text
+        == "Welcome, John Doe!"
+    ):
+        print("Użytkownik zalogowany, kontynuacja")
+    else:
+        print("Użytkownik niezalogowany, logowanie")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
+            self.dane.account_data_valid("mail")
+        )
+        driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
+            self.dane.account_data_valid("password")
+        )
+        driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
     sleep(2)
 
 
@@ -62,7 +76,7 @@ def clean_cart(self):
     sleep(3)
 
 
-class TestClass(unittest.TestCase):
+class TestClassNoLogIn(unittest.TestCase):
     driver = webdriver.Chrome()
 
     def setUp(self):
@@ -339,7 +353,7 @@ class TestClass(unittest.TestCase):
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
             self.dane.test_password_ok_very_strong()
         )
-        self.wait_5s
+        sleep(2)
         assert (
             driver.find_element(
                 By.XPATH, '//*[@id="password-strength-meter-label"]'
@@ -372,6 +386,17 @@ class TestClass(unittest.TestCase):
             + self.dane.account_data_valid("surname")
             + "!"
         )
+
+
+class TestClassLogIn(unittest.TestCase):
+    driver = webdriver.Chrome()
+
+    def setUp(self):
+        # self.driver = webdriver.Chrome()
+        self.action = webdriver.ActionChains(self.driver)
+        self.wait = WebDriverWait(self.driver, 2)
+        self.driver.implicitly_wait(5)
+        self.dane = testing_data
 
     def test_user_data_viability_check(self):
         driver = self.driver
