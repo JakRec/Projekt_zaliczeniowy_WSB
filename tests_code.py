@@ -8,7 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 # from selenium.webdriver.common.action_chains import ActionChains
-# from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from time import sleep
 import testing_data
@@ -55,7 +55,7 @@ class TestClass(unittest.TestCase):
             == "true"
         )
 
-    def test_ceating_account_no_surname(self):
+    def test_creating_account_no_surname(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
@@ -111,7 +111,7 @@ class TestClass(unittest.TestCase):
             == "true"
         )
 
-    def test_ceating_account_password_to_short(self):
+    def test_creating_account_password_to_short(self):
         driver = self.driver
         wait = self.wait
         driver.get("https://magento.softwaretestingboard.com/")
@@ -140,7 +140,7 @@ class TestClass(unittest.TestCase):
                 assert False
         assert True
 
-    def test_ceating_account_password_no_special_char(self):
+    def test_creating_account_password_no_special_char(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
@@ -162,7 +162,7 @@ class TestClass(unittest.TestCase):
             == "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
         )
 
-    def test_ceating_account_password_not_match(self):
+    def test_creating_account_password_not_match(self):
         driver = self.driver
         wait = self.wait
         driver.get("https://magento.softwaretestingboard.com/")
@@ -193,7 +193,7 @@ class TestClass(unittest.TestCase):
             == "Please enter the same value again."
         )
 
-    def test_ceating_account_password_weak(self):
+    def test_creating_account_password_weak(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
@@ -219,7 +219,7 @@ class TestClass(unittest.TestCase):
             == "Weak"
         )
 
-    def test_ceating_account_password_medium(self):
+    def test_creating_account_password_medium(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
@@ -245,7 +245,7 @@ class TestClass(unittest.TestCase):
             == "Medium"
         )
 
-    def test_ceating_account_password_strong(self):
+    def test_creating_account_password_strong(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
@@ -271,7 +271,7 @@ class TestClass(unittest.TestCase):
             == "Strong"
         )
 
-    def test_ceating_account_password_very_strong(self):
+    def test_creating_account_password_very_strong(self):
         driver = self.driver
         driver.get("https://magento.softwaretestingboard.com/")
         driver.find_element(
@@ -289,12 +289,70 @@ class TestClass(unittest.TestCase):
         driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
             self.dane.test_password_ok_very_strong()
         )
-        sleep(2)
+        self.wait_5s
         assert (
             driver.find_element(
                 By.XPATH, '//*[@id="password-strength-meter-label"]'
             ).text
             == "Very Strong"
+        )
+
+    def test_login_to_existing_account(self):
+        driver = webdriver.Chrome()
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
+            self.dane.account_data_valid("mail")
+        )
+        driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
+            self.dane.account_data_valid("password")
+        )
+        driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
+        sleep(4)
+
+        assert (
+            driver.find_element(
+                By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
+            ).text
+            == "Welcome, "
+            + self.dane.account_data_valid("name")
+            + " "
+            + self.dane.account_data_valid("surname")
+            + "!"
+        )
+
+    def test_user_data_viability_check(self):
+        driver = webdriver.Chrome()
+        driver.get("https://magento.softwaretestingboard.com/")
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
+        ).click()
+        driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
+            self.dane.account_data_valid("mail")
+        )
+        driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
+            self.dane.account_data_valid("password")
+        )
+        driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
+        sleep(4)
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/span/button"
+        ).click()
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/div/ul/li[1]/a"
+        ).click()
+        el1 = driver.find_element(
+            By.XPATH,
+            '//*[@id="maincontent"]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/p',
+        ).text
+        assert el1 == self.dane.account_data_valid(
+            "name"
+        ) + " " + self.dane.account_data_valid(
+            "surname"
+        ) + "\n" + self.dane.account_data_valid(
+            "mail"
         )
 
 

@@ -45,3 +45,14 @@ def test_password_ok_strong():
 
 def test_password_ok_very_strong():
     return "aaaaa1A.:aaa!"
+
+
+def account_data_valid(credential_type):
+    if credential_type == "name":
+        return "John"
+    elif credential_type == "surname":
+        return "Doe"
+    elif credential_type == "mail":
+        return "johndoe@xyb.com"
+    elif credential_type == "password":
+        return "ndeNZ.eJN5kEGdp"
