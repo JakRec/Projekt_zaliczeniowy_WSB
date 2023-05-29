@@ -1,44 +1,49 @@
-# projekt bedzie opieral sie o testowanie funkcjonalnosci strony magento.softwaretestingboard.com/ z wykrozystaniem biblioteki selenium
+# projekt bedzie opieral sie o testowanie funkcjonalnosci strony magento.softwaretestingboard.com/ z wykorzystaniem biblioteki selenium
 
 # wczytanie bibliotek
 import unittest
 from selenium import webdriver
-
-# from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-# from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.support import expected_conditions as EC biblioteka na ten moment nie uzywana
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.select import Select
 from time import sleep
 import testing_data
 
+main_page_adress = "https://magento.softwaretestingboard.com/"
+register_firstname_id = '//input[@id="firstname"]'
+register_lastname_id = '//input[@id="lastname"]'
+register_mail_id = '//input[@id="email_address"]'
+register_password_id = '//input[@id="password"]'
+register_password_confirmation_id = '//input[@id="password-confirmation"]'
+main_page_welcome_message_id = "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
+main_page_sign_in_button_id = '//a[contains(text(), "Sign In")]'
+sign_in_page_mail_id = '//*[@id="email"]'
+sign_in_page_password_id = '//*[@id="pass"]'
+
+
+def goto_main_page(self):
+    driver = self.driver
+    driver.get(main_page_adress)
+
 
 def login_to_account(self):
     driver = self.driver
-    driver.get("https://magento.softwaretestingboard.com/")
-    print(
-        driver.find_element(
-            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
-        ).text
-    )
+    goto_main_page(self)
+    print(driver.find_element(By.XPATH, main_page_welcome_message_id).text)
     if (
-        driver.find_element(
-            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
-        ).text
+        driver.find_element(By.XPATH, main_page_welcome_message_id).text
         == "Welcome, John Doe!"
     ):
         print("Użytkownik zalogowany, kontynuacja")
     else:
         print("Użytkownik niezalogowany, logowanie")
-        driver.find_element(
-            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
-        ).click()
-        driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
+        driver.find_element(By.XPATH, main_page_sign_in_button_id).click()
+        driver.find_element(By.XPATH, sign_in_page_mail_id).send_keys(
             self.dane.account_data_valid("mail")
         )
-        driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
+        driver.find_element(By.XPATH, sign_in_page_password_id).send_keys(
             self.dane.account_data_valid("password")
         )
         driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
@@ -88,25 +93,23 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_website_opening(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         assert driver.title == "Home Page"
 
     def test_creating_account_no_name(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password()
         )
-        driver.find_element(By.XPATH, '//input[@id="password-confirmation"]').send_keys(
+        driver.find_element(By.XPATH, register_password_confirmation_id).send_keys(
             self.dane.test_password()
         )
         driver.find_element(
@@ -121,20 +124,18 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_no_surname(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password()
         )
-        driver.find_element(By.XPATH, '//input[@id="password-confirmation"]').send_keys(
+        driver.find_element(By.XPATH, register_password_confirmation_id).send_keys(
             self.dane.test_password()
         )
         driver.find_element(
@@ -147,22 +148,22 @@ class TestClassNoLogIn(unittest.TestCase):
             == "true"
         )
 
-    def test_ceating_account_no_mail(self):
+    def test_creating_account_no_mail(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password()
         )
-        driver.find_element(By.XPATH, '//input[@id="password-confirmation"]').send_keys(
+        driver.find_element(By.XPATH, register_password_confirmation_id).send_keys(
             self.dane.test_password()
         )
         driver.find_element(
@@ -177,22 +178,20 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_to_short(self):
         driver = self.driver
-        wait = self.wait
-        driver.get("https://magento.softwaretestingboard.com/")
+        # wait = self.wait
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
         for password_length in range(7):
-            driver.find_element(By.XPATH, '//input[@id="password"]').send_keys("a")
+            driver.find_element(By.XPATH, register_password_id).send_keys("a")
             sleep(0.5)
             password_length += 1
             if (
@@ -206,20 +205,18 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_no_special_char(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys("aaaaaaaa")
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys("aaaaaaaa")
         sleep(2)
         assert (
             driver.find_element(By.XPATH, '//*[@id="password-error"]').text
@@ -228,24 +225,22 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_not_match(self):
         driver = self.driver
-        wait = self.wait
-        driver.get("https://magento.softwaretestingboard.com/")
+        # wait = self.wait
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password()
         )
-        driver.find_element(By.XPATH, '//*[@id="password-confirmation"]').send_keys(
+        driver.find_element(By.XPATH, register_password_confirmation_id).send_keys(
             self.dane.test_password() + "a"
         )
         driver.find_element(
@@ -259,20 +254,18 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_weak(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password_ok_weak()
         )
         sleep(2)
@@ -285,20 +278,18 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_medium(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password_ok_medium()
         )
         sleep(2)
@@ -311,20 +302,18 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_strong(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password_ok_strong()
         )
         sleep(2)
@@ -337,20 +326,18 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_creating_account_password_very_strong(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         ).click()
-        driver.find_element(By.XPATH, '//input[@id="firstname"]').send_keys(
+        driver.find_element(By.XPATH, register_firstname_id).send_keys(
             self.dane.test_firstname()
         )
-        driver.find_element(By.XPATH, '//input[@id="lastname"]').send_keys(
+        driver.find_element(By.XPATH, register_lastname_id).send_keys(
             self.dane.test_surname()
         )
-        driver.find_element(By.XPATH, '//input[@id="email_address"]').send_keys(
-            self.dane.test_mail()
-        )
-        driver.find_element(By.XPATH, '//input[@id="password"]').send_keys(
+        driver.find_element(By.XPATH, register_mail_id).send_keys(self.dane.test_mail())
+        driver.find_element(By.XPATH, register_password_id).send_keys(
             self.dane.test_password_ok_very_strong()
         )
         sleep(2)
@@ -363,23 +350,21 @@ class TestClassNoLogIn(unittest.TestCase):
 
     def test_login_to_existing_account(self):
         driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/a"
         ).click()
-        driver.find_element(By.XPATH, '//*[@id="email"]').send_keys(
+        driver.find_element(By.XPATH, sign_in_page_mail_id).send_keys(
             self.dane.account_data_valid("mail")
         )
-        driver.find_element(By.XPATH, '//*[@id="pass"]').send_keys(
+        driver.find_element(By.XPATH, sign_in_page_password_id).send_keys(
             self.dane.account_data_valid("password")
         )
         driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
         sleep(4)
 
         assert (
-            driver.find_element(
-                By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[1]/span"
-            ).text
+            driver.find_element(By.XPATH, main_page_welcome_message_id).text
             == "Welcome, "
             + self.dane.account_data_valid("name")
             + " "
@@ -548,7 +533,7 @@ class TestClassLogIn(unittest.TestCase):
         sleep(1)
         assert driver.find_element(By.XPATH, '//*[@id="city-error"]')
 
-    def test_cart_adding(self):
+    def test_zzzzcart_adding(self):
         driver = self.driver
         login_to_account(self)
         sleep(2)
@@ -601,8 +586,7 @@ if __name__ == "__main__":
 
 
 """    def test_ceating_account_positive(self):
-        driver = self.driver
-        driver.get("https://magento.softwaretestingboard.com/")
+        goto_main_page(self)
         el1 = driver.find_element(
             By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[3]/a"
         )
