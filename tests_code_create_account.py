@@ -223,7 +223,7 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
         driver.find_element(By.XPATH, self.locators.register_password_id).send_keys(
-            self.dane.test_password(self, "no special char")
+            self.dane.test_password("no special char")
         )
         sleep(2)
         assert (
@@ -239,10 +239,10 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_firstname(self)
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
-        account_page_fill_password(self)
+        account_page_fill_password(self, "ok")
         driver.find_element(
             By.XPATH, self.locators.register_password_confirmation_id
-        ).send_keys(self.dane.test_password(self, "ok") + "a")
+        ).send_keys(self.dane.test_password("ok") + "a")
         driver.find_element(
             By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
         ).click()
