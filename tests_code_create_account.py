@@ -141,6 +141,68 @@ def account_page_fill_password_too_short(self):
     assert True
 
 
+def account_page_no_name_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(
+            By.XPATH, self.locators.create_account_firstname_error_id
+        ).get_attribute("generated")
+        == "true"
+    )
+
+
+def account_page_no_lastname_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(
+            By.XPATH, self.locators.create_account_lastname_error_id
+        ).get_attribute("generated")
+        == "true"
+    )
+
+
+def account_page_no_mail_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(
+            By.XPATH, self.locators.create_account_mail_error_id
+        ).get_attribute("generated")
+        == "true"
+    )
+
+
+def account_page_password_no_special_char_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(By.XPATH, '//*[@id="password-error"]').text
+        == "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
+    )
+
+
+def account_page_password_not_match_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(By.XPATH, '//*[@id="password-confirmation-error"]').text
+        == "Please enter the same value again."
+    )
+
+
+def account_page_password_weak_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(By.XPATH, '//*[@id="password-strength-meter-label"]').text
+        == "Weak"
+    )
+
+
+def account_page_password_medium_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(By.XPATH, '//*[@id="password-strength-meter-label"]').text
+        == "Medium"
+    )
+
+
 class TestAccountCreatingForm(unittest.TestCase):
     driver = webdriver.Chrome()
 
@@ -166,14 +228,9 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_password(self, "ok")
         account_page_fill_repeat_password(self, "ok")
         account_page_submit_button_click(self)
-        assert (
-            driver.find_element(By.XPATH, '//*[@id="firstname-error"]').get_attribute(
-                "generated"
-            )
-            == "true"
-        )
+        account_page_no_name_assert(self)
 
-    def test_creating_account_no_surname(self):
+    def test_creating_account_no_lastname(self):
         driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
@@ -182,12 +239,7 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_password(self, "ok")
         account_page_fill_repeat_password(self, "ok")
         account_page_submit_button_click(self)
-        assert (
-            driver.find_element(By.XPATH, '//*[@id="lastname-error"]').get_attribute(
-                "generated"
-            )
-            == "true"
-        )
+        account_page_no_lastname_assert(self)
 
     def test_creating_account_no_mail(self):
         driver = self.driver
@@ -198,12 +250,7 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_password(self, "ok")
         account_page_fill_repeat_password(self, "ok")
         account_page_submit_button_click(self)
-        assert (
-            driver.find_element(
-                By.XPATH, '//*[@id="email_address-error"]'
-            ).get_attribute("generated")
-            == "true"
-        )
+        account_page_no_mail_assert(self)
 
     def test_creating_account_password_to_short(self):
         driver = self.driver
@@ -222,35 +269,22 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_firstname(self)
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
-        driver.find_element(By.XPATH, self.locators.register_password_id).send_keys(
-            self.dane.test_password("no special char")
-        )
+        account_page_fill_password(self, "no special char")
         sleep(2)
-        assert (
-            driver.find_element(By.XPATH, '//*[@id="password-error"]').text
-            == "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
-        )
+        account_page_password_no_special_char_assert(self)
 
     def test_creating_account_password_not_match(self):
         driver = self.driver
-        # wait = self.wait
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
         account_page_fill_password(self, "ok")
-        driver.find_element(
-            By.XPATH, self.locators.register_password_confirmation_id
-        ).send_keys(self.dane.test_password("ok") + "a")
-        driver.find_element(
-            By.XPATH, '//*[@id="form-validate"]/div/div[1]/button'
-        ).click()
+        account_page_fill_repeat_password(self, "ok different")
+        account_page_submit_button_click(self)
         sleep(2)
-        assert (
-            driver.find_element(By.XPATH, '//*[@id="password-confirmation-error"]').text
-            == "Please enter the same value again."
-        )
+        account_page_password_not_match_assert(self)
 
     def test_creating_account_password_weak(self):
         driver = self.driver
@@ -259,16 +293,9 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_firstname(self)
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
-        driver.find_element(By.XPATH, self.locators.register_password_id).send_keys(
-            self.dane.test_password("weak")
-        )
+        account_page_fill_password(self, "weak")
         sleep(2)
-        assert (
-            driver.find_element(
-                By.XPATH, '//*[@id="password-strength-meter-label"]'
-            ).text
-            == "Weak"
-        )
+        account_page_password_weak_assert(self)
 
     def test_creating_account_password_medium(self):
         driver = self.driver
@@ -277,16 +304,9 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_firstname(self)
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
-        driver.find_element(By.XPATH, self.locators.register_password_id).send_keys(
-            self.dane.test_password("medium")
-        )
+        account_page_fill_password(self, "medium")
         sleep(2)
-        assert (
-            driver.find_element(
-                By.XPATH, '//*[@id="password-strength-meter-label"]'
-            ).text
-            == "Medium"
-        )
+        account_page_password_medium_assert(self)
 
     def test_creating_account_password_strong(self):
         driver = self.driver
@@ -295,9 +315,7 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_firstname(self)
         account_page_fill_lastname(self)
         account_page_fill_mail(self)
-        driver.find_element(By.XPATH, self.locators.register_password_id).send_keys(
-            self.dane.test_password("strong")
-        )
+        account_page_fill_password(self, "strong")
         sleep(2)
         assert (
             driver.find_element(

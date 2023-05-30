@@ -34,21 +34,8 @@ def test_password(type):
         return "aaaaa1A.:aaa!"
     elif type == "ok":
         return "BardzoMocneHaslo3212."
-
-
-"""
-def test_password_no_special_char():
-def test_password_only_two_special_chars():
-    return "aaaaaa1A"
-def test_password_ok_weak():
-    return "aaaaa1A."
-def test_password_ok_medium():
-    return "aaaaa1A.:"
-def test_password_ok_strong():
-    return "aaaaa1A.:aa"
-def test_password_ok_very_strong():
-    return "aaaaa1A.:aaa!"
-"""
+    elif type == "ok different":
+        return "BardzoMocneHaslo3212.a"
 
 
 def account_data_valid(credential_type):
