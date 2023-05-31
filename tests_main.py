@@ -9,9 +9,9 @@ from selenium.webdriver.common.by import By
 # from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from time import sleep
-import testing_data
-import tests_code
+import tests_credentials
+import tests_code_create_account
 
-tests_code.TestClass.setUp(self=None)
-tests_code.TestClass.test_ceating_account_no_mail(self=None)
-tests_code.TestClass.test_ceating_account_no_surname(self=None)
+tests_code_create_account.TestClass.setUp(self=None)
+tests_code_create_account.TestClass.test_ceating_account_no_mail(self=None)
+tests_code_create_account.TestClass.test_ceating_account_no_surname(self=None)
