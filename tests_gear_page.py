@@ -86,6 +86,58 @@ def gear_bags_pages_are_full_except_last_test_and_assert(self):
         ) == item_page_find_all_items_for_sale(self)
 
 
+def item_pages_are_full_except_last_test(self):
+    max_items_on_page = item_page_find_how_many_items_for_sale_max(self)
+    predicted_last_page_items_number = (
+        item_page_find_how_many_items_for_sale_max(self) % 12
+    )
+    pages_number = item_page_find_how_many_items_for_sale_max(self) // 12 + 1
+    print(pages_number)
+    current_page = 1
+    total_items_number = 0
+    for current_page in range(current_page, pages_number + 1):
+        total_items_number += item_page_find_all_items_for_sale(self)
+        print(
+            "At page number: "
+            + str(current_page)
+            + " present: "
+            + str(item_page_find_all_items_for_sale(self))
+            + " elements"
+        )
+        if current_page == pages_number:
+            actual_last_page_items_number = item_page_find_all_items_for_sale(self)
+        else:
+            current_page += 1
+            gear_bags_page_goto_next_page(self)
+            sleep(1)
+    print("total elements in category: " + str(total_items_number))
+    print("elements on last page: " + str(actual_last_page_items_number))
+    return (
+        total_items_number,
+        predicted_last_page_items_number,
+        actual_last_page_items_number,
+        max_items_on_page,
+    )
+
+
+def item_pages_are_full_except_last_assert(
+    self,
+    total_items_number,
+    predicted_last_page_items_number,
+    actual_last_page_items_number,
+    max_items_on_page,
+):
+    if max_items_on_page >= 12:
+        assert (
+            item_page_find_how_many_items_for_sale_max(self) == total_items_number
+            and predicted_last_page_items_number == actual_last_page_items_number
+        )
+    else:
+        assert item_page_find_how_many_items_for_sale_max(
+            self
+        ) == item_page_find_all_items_for_sale(self)
+
+
 class TestGearPage(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
@@ -106,7 +158,10 @@ class TestGearPage(unittest.TestCase):
         goto_main_page(self)
         goto_gear_bags(self)
         sleep(2)
-        gear_bags_pages_are_full_except_last_test_and_assert(self)
+        output = item_pages_are_full_except_last_test(self)
+        item_pages_are_full_except_last_assert(
+            self, output[0], output[1], output[2], output[3]
+        )
 
 
 def tearDown(self):
