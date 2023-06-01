@@ -1,5 +1,3 @@
-# projekt bedzie opieral sie o testowanie funkcjonalnosci strony magento.softwaretestingboard.com/ z wykorzystaniem biblioteki selenium
-
 # wczytanie bibliotek
 import unittest
 from selenium import webdriver
@@ -22,11 +20,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         self.driver.implicitly_wait(5)
         self.dane = tests_credentials
         self.locators = tests_site_locators
-
-    def test_website_opening(self):
-        driver = self.driver
-        goto_main_page(self)
-        main_page_title_assert(self)
 
     def test_creating_account_no_name(self):
         driver = self.driver
@@ -152,23 +145,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         sleep(2)
         account_page_create_account_but_mail_already_existing_assert(self)
 
-    def test_sign_in_to_existing_account(self):
-        driver = self.driver
-        goto_main_page(self)
-        goto_sign_in_page(self)
-        sign_in_page_fill_in_mail(self)
-        sign_in_page_fill_in_password(self)
-        sign_in_page_sign_in_button_click(self)
-        sleep(4)
-        sign_in_to_existing_account_assert(self)
-
-
-def tearDown(self):
-    self.driver.close()
-
-
-if __name__ == "__main__":
-    unittest.main(verbosity=2)
 
 """  Due to assertion method, this will be only positive when creating the account for first time
     def test_creating_account_positive(self):
@@ -183,3 +159,11 @@ if __name__ == "__main__":
         sleep(2)
         check_if_John_Doe_logged_in(self)
 """
+
+
+def tearDown(self):
+    self.driver.close()
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
