@@ -20,7 +20,7 @@ def goto_main_page(self):
 
 def sign_in_page_sign_in_button_click(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="send2"]/span').click()
+    driver.find_element(By.XPATH, self.locators.sign_in_page_sign_in_button_id).click()
 
 
 def login_to_account(self):
@@ -63,28 +63,26 @@ def sign_in_page_fill_in_password(self):
 def goto_account_data(self):
     driver = self.driver
     driver.find_element(
-        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/span/button"
+        By.XPATH, self.locators.main_page_account_options_expand_id
     ).click()
     driver.find_element(
-        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/div/ul/li[1]/a"
+        By.XPATH, self.locators.main_page_account_options_expanded_open_account_data_id
     ).click()
 
 
 def create_new_account_page_load_up_assert(self):
     driver = self.driver
-    assert driver.title() == "Create New Customer Account"
+    assert driver.title() == self.locators.create_account_page_title
 
 
 def sign_in_page_load_up_assert(self):
     driver = self.driver
-    assert driver.title() == "Customer Login"
+    assert driver.title() == self.locators.sign_in_page_title
 
 
 def goto_shipping_adress_page(self):
     driver = self.driver
-    driver.find_element(
-        By.XPATH, '//*[@data-ui-id="default-shipping-edit-link"]'
-    ).click()
+    driver.find_element(By.XPATH, self.locators.account_page_shipping_adress_id).click()
 
 
 def goto_sign_in_page(self):
@@ -96,12 +94,10 @@ def clean_cart(self):
     driver = self.driver
     sleep(2)
     # cleaning
-    driver.find_element(
-        By.XPATH, '//*[@id="mini-cart"]/li[1]/div/div/div[3]/div[2]/a'
-    ).click()
+    driver.find_element(By.XPATH, self.locators.main_page_mini_cart_expand_id).click()
     sleep(2)
     driver.find_element(
-        By.XPATH, "/html/body/div[3]/aside[2]/div[2]/footer/button[2]"
+        By.XPATH, self.locators.main_page_mini_cart_clean_cart_button_id
     ).click()
     sleep(3)
 
@@ -308,41 +304,41 @@ def user_data_viability_check_assert(self):
 
 def delivery_adress_page_clean_firstname_and_lastname(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="firstname"]').clear()
-    driver.find_element(By.XPATH, '//*[@id="lastname"]').clear()
+    driver.find_element(By.XPATH, self.locators.delivery_page_firstname_id).clear()
+    driver.find_element(By.XPATH, self.locators.delivery_page_lastname_id).clear()
 
 
 def delivery_adress_page_fill_firstname(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="firstname"]').send_keys(
+    driver.find_element(By.XPATH, self.locators.delivery_page_firstname_id).send_keys(
         self.dane.account_data_valid("name")
     )
 
 
 def delivery_adress_page_fill_lastname(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="lastname"]').send_keys(
+    driver.find_element(By.XPATH, self.locators.delivery_page_lastname_id).send_keys(
         self.dane.account_data_valid("surname")
     )
 
 
 def delivery_adress_page_fill_telephone(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="telephone"]').send_keys(
+    driver.find_element(By.XPATH, self.locators.delivery_page_telephone_id).send_keys(
         self.dane.account_data_valid("phone")
     )
 
 
 def delivery_adress_page_fill_adress(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="street_1"]').send_keys(
+    driver.find_element(By.XPATH, self.locators.delivery_page_street_id).send_keys(
         self.dane.account_data_valid("adress")
     )
 
 
 def delivery_adress_page_fill_city(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="city"]').send_keys(
+    driver.find_element(By.XPATH, self.locators.delivery_page_city_id).send_keys(
         self.dane.account_data_valid("city")
     )
 
@@ -350,66 +346,66 @@ def delivery_adress_page_fill_city(self):
 def delivery_adress_page_fill_region(self):
     driver = self.driver
     Select(
-        driver.find_element(By.XPATH, '//*[@id="region_id"]')
+        driver.find_element(By.XPATH, self.locators.delivery_page_region_id)
     ).select_by_visible_text("Arizona")
 
 
 def delivery_adress_page_fill_postal_code(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="zip"]').send_keys(
+    driver.find_element(By.XPATH, self.locators.delivery_page_zip_code_id).send_keys(
         self.dane.account_data_valid("postal_code")
     )
 
 
 def delivery_adress_page_fill_country(self):
     driver = self.driver
-    Select(driver.find_element(By.XPATH, '//*[@id="country"]')).select_by_visible_text(
-        self.dane.account_data_valid("country")
-    )
+    Select(
+        driver.find_element(By.XPATH, self.locators.delivery_page_country_id)
+    ).select_by_visible_text(self.dane.account_data_valid("country"))
     driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
 
 
 def delivery_adress_page_save_adress_button_click(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@title="Save Address"]').click()
+    driver.find_element(
+        By.XPATH, self.locators.delivery_page_save_adress_button_id
+    ).click()
 
 
 def delivery_adress_no_firstname_assert(self):
     driver = self.driver
-    assert driver.find_element(By.XPATH, '//*[@id="firstname-error"]')
+    assert driver.find_element(By.XPATH, self.locators.delivery_page_firstname_error_id)
 
 
 def delivery_adress_no_lastname_assert(self):
     driver = self.driver
-    assert driver.find_element(By.XPATH, '//*[@id="lastname-error"]')
+    assert driver.find_element(By.XPATH, self.locators.delivery_page_lastname_error_id)
 
 
 def delivery_adress_no_telephone_assert(self):
     driver = self.driver
-    assert driver.find_element(By.XPATH, '//*[@id="telephone-error"]')
+    assert driver.find_element(By.XPATH, self.locators.delivery_page_telephone_error_id)
 
 
 def delivery_adress_no_adress_assert(self):
     driver = self.driver
-    assert driver.find_element(By.XPATH, '//*[@id="street_1-error"]')
+    assert driver.find_element(By.XPATH, self.locators.delivery_page_street_error_id)
 
 
 def delivery_adress_no_city_assert(self):
     driver = self.driver
-    assert driver.find_element(By.XPATH, '//*[@id="city-error"]')
+    assert driver.find_element(By.XPATH, self.locators.delivery_page_city_error_id)
 
 
 def open_cart(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@class="action showcart"]').click()
+    driver.find_element(By.XPATH, self.locators.open_cart_button_id).click()
 
 
 def cart_clean_cart(self):
     driver = self.driver
     if (
-        driver.find_element(
-            By.XPATH, '//*[@id="minicart-content-wrapper"]/div[2]/strong'
-        ).text
+        driver.find_element(By.XPATH, self.locators.cart_content_no_content).text
         != "You have no items in your shopping cart."
     ):
         print("czyszczenie koszyka")
@@ -434,7 +430,7 @@ def cart_adding_item_assert(self):
     assert (
         int(
             driver.find_element(
-                By.XPATH, "/html/body/div[1]/header/div[2]/div[1]/a/span[2]/span[1]"
+                By.XPATH, self.locators.cart_content_content_number
             ).text
         )
         == 1
@@ -443,27 +439,29 @@ def cart_adding_item_assert(self):
 
 def goto_account_informations(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="block-collapsible-nav"]/ul/li[7]/a').click()
+    driver.find_element(By.XPATH, self.locators.account_page_go_to_acc_page_id).click()
 
 
 def account_informations_page_load_up_assert(self):
     driver = self.driver
-    assert driver.title == "Account Information"
+    assert driver.title == self.locators.account_information_page_title
 
 
 def account_informations_page_change_mail_click(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="change-email"]').click()
+    driver.find_element(
+        By.XPATH, self.locators.account_information_page_change_email_id
+    ).click()
 
 
 def account_informations_page_change_mail_assert(self):
     driver = self.driver
     assert (
         driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
+            By.XPATH, self.locators.account_information_page_change_mail_password_id
         ).is_displayed()
         and driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
+            By.XPATH, self.locators.account_information_page_change_mail_password_id
         ).text
         == "Change Email"
     )
@@ -471,17 +469,19 @@ def account_informations_page_change_mail_assert(self):
 
 def account_informations_page_change_password_click(self):
     driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="change-password"]').click()
+    driver.find_element(
+        By.XPATH, self.locators.account_information_page_change_password_id
+    ).click()
 
 
 def account_informations_page_change_password_assert(self):
     driver = self.driver
     assert (
         driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
+            By.XPATH, self.locators.account_information_page_change_mail_password_id
         ).is_displayed()
         and driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
+            By.XPATH, self.locators.account_information_page_change_mail_password_id
         ).text
         == "Change Password"
     )
@@ -491,10 +491,10 @@ def account_informations_page_change_mail_and_password_assert(self):
     driver = self.driver
     assert (
         driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
+            By.XPATH, self.locators.account_information_page_change_mail_password_id
         ).is_displayed()
         and driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
+            By.XPATH, self.locators.account_information_page_change_mail_password_id
         ).text
         == "Change Email and Password"
     )
@@ -503,24 +503,30 @@ def account_informations_page_change_mail_and_password_assert(self):
 def goto_gear_bags(self):
     driver = self.driver
     action = self.action
-    action.move_to_element(driver.find_element(By.XPATH, '//*[@id="ui-id-6"]')).click(
-        driver.find_element(By.XPATH, '//*[@id="ui-id-25"]')
+    action.move_to_element(
+        driver.find_element(By.XPATH, self.locators.main_page_gear_menu_expand_id)
+    ).click(
+        driver.find_element(
+            By.XPATH, self.locators.main_page_gear_menu_expanded_bags_id
+        )
     ).perform()
 
 
 def gear_bags_page_shows_up_assert(self):
     driver = self.driver
-    assert driver.title == "Bags - Gear"
+    assert driver.title == self.locators.gear_bags_page_titl
 
 
 def item_page_find_how_many_items_for_sale_max(self):
     driver = self.driver
-    return int(driver.find_element(By.XPATH, '//*[@id="toolbar-amount"]/span[3]').text)
+    return int(
+        driver.find_element(By.XPATH, self.locators.gear_bags_page_item_counter_id).text
+    )
 
 
 def item_page_find_all_items_for_sale(self):
     driver = self.driver
-    return len(driver.find_elements(By.XPATH, '//a[@class="product-item-link"]'))
+    return len(driver.find_elements(By.XPATH, self.locators.gear_bags_page_any_item_id))
 
 
 def gear_bags_page_is_full_assert(self):
@@ -536,7 +542,7 @@ def gear_bags_page_goto_next_page(self):
     driver = self.driver
     driver.find_element(
         By.XPATH,
-        '//*[@id="maincontent"]/div[3]/div[1]/div[4]/div[2]/ul/li[2]/a',
+        self.locators.gear_bags_page_next_page_button_id,
     ).click()
 
 

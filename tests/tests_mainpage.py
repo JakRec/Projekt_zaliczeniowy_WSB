@@ -1,4 +1,4 @@
-# projekt bedzie opieral sie o testowanie funkcjonalnosci strony magento.softwaretestingboard.com/ z wykorzystaniem biblioteki selenium
+# zbior testow dla strony glownej
 
 # wczytanie bibliotek
 import unittest
