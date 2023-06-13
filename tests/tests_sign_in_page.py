@@ -1,4 +1,4 @@
-# wczytanie bibliotek
+# zbior testow dla podstrony logowania
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -21,6 +21,12 @@ class TestAccountCreatingForm(unittest.TestCase):
         self.dane = tests_credentials
         self.locators = tests_site_locators
 
+    def test_sign_in_page_load_up(self):
+        driver = self.driver
+        goto_main_page(self)
+        goto_sign_in_page(self)
+        sign_in_page_load_up_assert(self)
+
     def test_sign_in_to_existing_account(self):
         driver = self.driver
         goto_main_page(self)
@@ -30,6 +36,23 @@ class TestAccountCreatingForm(unittest.TestCase):
         sign_in_page_sign_in_button_click(self)
         sleep(4)
         sign_in_to_existing_account_assert(self)
+
+    def test_sign_in_and_logout(self):
+        driver = self.driver
+        goto_main_page(self)
+        goto_sign_in_page(self)
+        sign_in_page_fill_in_mail(self)
+        sign_in_page_fill_in_password(self)
+        sign_in_page_sign_in_button_click(self)
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/span/button"
+        ).click()
+        driver.find_element(
+            By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/div/ul/li[3]/a"
+        ).click()
+        driver.find_element(
+            By.XPATH, '//*[@id="maincontent"]/div[1]/h1/span'
+        ) == "You are signed out"
 
 
 def tearDown(self):

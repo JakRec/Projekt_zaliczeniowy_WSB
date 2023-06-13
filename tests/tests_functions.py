@@ -1,3 +1,5 @@
+# funkcje wykorzystywane w testach
+
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -66,6 +68,16 @@ def goto_account_data(self):
     driver.find_element(
         By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/div/ul/li[1]/a"
     ).click()
+
+
+def create_new_account_page_load_up_assert(self):
+    driver = self.driver
+    assert driver.title() == "Create New Customer Account"
+
+
+def sign_in_page_load_up_assert(self):
+    driver = self.driver
+    assert driver.title() == "Customer Login"
 
 
 def goto_shipping_adress_page(self):
@@ -427,3 +439,189 @@ def cart_adding_item_assert(self):
         )
         == 1
     )
+
+
+def goto_account_informations(self):
+    driver = self.driver
+    driver.find_element(By.XPATH, '//*[@id="block-collapsible-nav"]/ul/li[7]/a').click()
+
+
+def account_informations_page_load_up_assert(self):
+    driver = self.driver
+    assert driver.title == "Account Information"
+
+
+def account_informations_page_change_mail_click(self):
+    driver = self.driver
+    driver.find_element(By.XPATH, '//*[@id="change-email"]').click()
+
+
+def account_informations_page_change_mail_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(
+            By.XPATH, '//span[@data-title="change-email-password"]'
+        ).is_displayed()
+        and driver.find_element(
+            By.XPATH, '//span[@data-title="change-email-password"]'
+        ).text
+        == "Change Email"
+    )
+
+
+def account_informations_page_change_password_click(self):
+    driver = self.driver
+    driver.find_element(By.XPATH, '//*[@id="change-password"]').click()
+
+
+def account_informations_page_change_password_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(
+            By.XPATH, '//span[@data-title="change-email-password"]'
+        ).is_displayed()
+        and driver.find_element(
+            By.XPATH, '//span[@data-title="change-email-password"]'
+        ).text
+        == "Change Password"
+    )
+
+
+def account_informations_page_change_mail_and_password_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(
+            By.XPATH, '//span[@data-title="change-email-password"]'
+        ).is_displayed()
+        and driver.find_element(
+            By.XPATH, '//span[@data-title="change-email-password"]'
+        ).text
+        == "Change Email and Password"
+    )
+
+
+def goto_gear_bags(self):
+    driver = self.driver
+    action = self.action
+    action.move_to_element(driver.find_element(By.XPATH, '//*[@id="ui-id-6"]')).click(
+        driver.find_element(By.XPATH, '//*[@id="ui-id-25"]')
+    ).perform()
+
+
+def gear_bags_page_shows_up_assert(self):
+    driver = self.driver
+    assert driver.title == "Bags - Gear"
+
+
+def item_page_find_how_many_items_for_sale_max(self):
+    driver = self.driver
+    return int(driver.find_element(By.XPATH, '//*[@id="toolbar-amount"]/span[3]').text)
+
+
+def item_page_find_all_items_for_sale(self):
+    driver = self.driver
+    return len(driver.find_elements(By.XPATH, '//a[@class="product-item-link"]'))
+
+
+def gear_bags_page_is_full_assert(self):
+    if item_page_find_how_many_items_for_sale_max(self) >= 12:
+        assert item_page_find_all_items_for_sale(self) == 12
+    else:
+        assert item_page_find_how_many_items_for_sale_max(
+            self
+        ) == item_page_find_all_items_for_sale(self)
+
+
+def gear_bags_page_goto_next_page(self):
+    driver = self.driver
+    driver.find_element(
+        By.XPATH,
+        '//*[@id="maincontent"]/div[3]/div[1]/div[4]/div[2]/ul/li[2]/a',
+    ).click()
+
+
+def gear_bags_pages_are_full_except_last_test_and_assert(self):
+    if item_page_find_how_many_items_for_sale_max(self) >= 12:
+        predicted_last_page_items_number = (
+            item_page_find_how_many_items_for_sale_max(self) % 12
+        )
+        pages_number = item_page_find_how_many_items_for_sale_max(self) // 12 + 1
+        current_page = 1
+        total_items_number = 0
+        for current_page in range(current_page, pages_number + 1):
+            total_items_number += item_page_find_all_items_for_sale(self)
+            print(
+                "At page number: "
+                + str(current_page)
+                + " present: "
+                + str(item_page_find_all_items_for_sale(self))
+                + " elements"
+            )
+            if current_page == pages_number:
+                actual_last_page_items_number = item_page_find_all_items_for_sale(self)
+            else:
+                current_page += 1
+                gear_bags_page_goto_next_page(self)
+                sleep(2)
+        print("total elements in category: " + str(total_items_number))
+        print("elements on last page: " + str(actual_last_page_items_number))
+        assert (
+            item_page_find_how_many_items_for_sale_max(self) == total_items_number
+            and predicted_last_page_items_number == actual_last_page_items_number
+        )
+    else:
+        assert item_page_find_how_many_items_for_sale_max(
+            self
+        ) == item_page_find_all_items_for_sale(self)
+
+
+def item_pages_are_full_except_last_test(self):
+    max_items_on_page = item_page_find_how_many_items_for_sale_max(self)
+    predicted_last_page_items_number = (
+        item_page_find_how_many_items_for_sale_max(self) % 12
+    )
+    pages_number = item_page_find_how_many_items_for_sale_max(self) // 12 + 1
+    print(pages_number)
+    current_page = 1
+    total_items_number = 0
+    for current_page in range(current_page, pages_number + 1):
+        total_items_number += item_page_find_all_items_for_sale(self)
+        print(
+            "At page number: "
+            + str(current_page)
+            + " present: "
+            + str(item_page_find_all_items_for_sale(self))
+            + " elements"
+        )
+        if current_page == pages_number:
+            actual_last_page_items_number = item_page_find_all_items_for_sale(self)
+        else:
+            current_page += 1
+            gear_bags_page_goto_next_page(self)
+            sleep(1)
+    print("total elements in category: " + str(total_items_number))
+    print("elements on last page: " + str(actual_last_page_items_number))
+    return (
+        total_items_number,
+        predicted_last_page_items_number,
+        actual_last_page_items_number,
+        max_items_on_page,
+    )
+
+
+def item_pages_are_full_except_last_assert(
+    self,
+    total_items_number,
+    predicted_last_page_items_number,
+    actual_last_page_items_number,
+    max_items_on_page,
+):
+    if max_items_on_page >= 12:
+        assert (
+            item_page_find_how_many_items_for_sale_max(self) == total_items_number
+            and predicted_last_page_items_number == actual_last_page_items_number
+        )
+    else:
+        assert item_page_find_how_many_items_for_sale_max(
+            self
+        ) == item_page_find_all_items_for_sale(self)

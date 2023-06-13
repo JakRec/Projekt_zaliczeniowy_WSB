@@ -1,3 +1,5 @@
+# zbior testow dla akcji sklepu
+
 # wczytanie bibliotek
 import unittest
 from selenium import webdriver

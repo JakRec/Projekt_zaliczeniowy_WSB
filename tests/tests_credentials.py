@@ -1,10 +1,10 @@
+# dane potrzebne do testow
+
 from faker import Faker
 
 fake = Faker(locale="pl_PL")
 
-# print(fake.first_name())
-# print(fake.last_name())
-# print(fake.email())
+# ponizej dane generowane losowo, dla formularza tworzenia nowego konta
 
 
 def test_firstname():
@@ -17,6 +17,9 @@ def test_surname():
 
 def test_mail():
     return fake.email()
+
+
+# ponizej dane stale, dzialajace
 
 
 def test_password(type):
@@ -54,7 +57,7 @@ def account_data_valid(credential_type):
     elif credential_type == "adress":
         return "Long Street 123"
     elif credential_type == "city":
-        return "London"
+        return "New York"
     elif credential_type == "postal_code":
         return "12345"
     elif credential_type == "country":

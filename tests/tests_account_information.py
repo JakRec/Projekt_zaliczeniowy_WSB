@@ -1,3 +1,5 @@
+# zbior testow do strony z inforamcjami o koncie
+
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,65 +11,6 @@ from time import sleep
 import tests_credentials
 import tests_site_locators
 from tests_functions import *
-
-
-def goto_account_informations(self):
-    driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="block-collapsible-nav"]/ul/li[7]/a').click()
-
-
-def account_informations_page_load_up_assert(self):
-    driver = self.driver
-    assert driver.title == "Account Information"
-
-
-def account_informations_page_change_mail_click(self):
-    driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="change-email"]').click()
-
-
-def account_informations_page_change_mail_assert(self):
-    driver = self.driver
-    assert (
-        driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
-        ).is_displayed()
-        and driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
-        ).text
-        == "Change Email"
-    )
-
-
-def account_informations_page_change_password_click(self):
-    driver = self.driver
-    driver.find_element(By.XPATH, '//*[@id="change-password"]').click()
-
-
-def account_informations_page_change_password_assert(self):
-    driver = self.driver
-    assert (
-        driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
-        ).is_displayed()
-        and driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
-        ).text
-        == "Change Password"
-    )
-
-
-def account_informations_page_change_mail_and_password_assert(self):
-    driver = self.driver
-    assert (
-        driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
-        ).is_displayed()
-        and driver.find_element(
-            By.XPATH, '//span[@data-title="change-email-password"]'
-        ).text
-        == "Change Email and Password"
-    )
 
 
 class TestAccountInformations(unittest.TestCase):

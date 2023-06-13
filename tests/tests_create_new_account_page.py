@@ -21,6 +21,12 @@ class TestAccountCreatingForm(unittest.TestCase):
         self.dane = tests_credentials
         self.locators = tests_site_locators
 
+    def test_create_account_page_loads_up(self):
+        driver = self.driver
+        goto_main_page(self)
+        goto_create_account_page(self)
+        create_new_account_page_load_up_assert(self)
+
     def test_creating_account_no_name(self):
         driver = self.driver
         goto_main_page(self)
