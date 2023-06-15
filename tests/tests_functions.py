@@ -9,7 +9,6 @@ from selenium.webdriver.support.select import Select
 from time import sleep
 import tests_credentials
 import tests_site_locators
-from tests_functions import *
 
 
 def goto_main_page(self):
@@ -23,7 +22,6 @@ def sign_in_page_sign_in_button_click(self):
 
 
 def login_to_account(self):
-    driver = self.driver
     goto_main_page(self)
     if check_if_John_Doe_logged_in(self):
         print("Użytkownik zalogowany, kontynuacja")
@@ -409,8 +407,6 @@ def cart_clean_cart(self):
         print("czyszczenie koszyka")
         clean_cart(self)
         print("wyczyszczono koszyk")
-    else:
-        pass
 
 
 def main_page_add_to_cart_blue_shirt(self):

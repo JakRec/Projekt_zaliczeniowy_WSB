@@ -13,10 +13,7 @@ import tests_functions as function
 
 
 class TestDeliveryForm(unittest.TestCase):
-    driver = webdriver.Chrome()
-
     def setUp(self):
-        # self.driver = webdriver.Chrome()
         self.action = webdriver.ActionChains(self.driver)
         self.wait = WebDriverWait(self.driver, 2)
         self.driver.implicitly_wait(5)
