@@ -24,7 +24,6 @@ class TestShopFunctionality(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_cart_adding(self):
-        driver = self.driver
         login_to_account(self)
         open_cart(self)
         sleep(1)

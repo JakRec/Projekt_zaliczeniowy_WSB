@@ -26,13 +26,11 @@ class TestDeliveryForm(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_user_data_viability_check(self):
-        driver = self.driver
         login_to_account(self)
         goto_account_data(self)
         user_data_viability_check_assert(self)
 
     def test_delivery_adress_no_firstname(self):
-        driver = self.driver
         login_to_account(self)
         goto_account_data(self)
         goto_shipping_adress_page(self)
@@ -48,7 +46,6 @@ class TestDeliveryForm(unittest.TestCase):
         delivery_adress_no_firstname_assert(self)
 
     def test_delivery_adress_no_lastname(self):
-        driver = self.driver
         login_to_account(self)
         goto_account_data(self)
         goto_shipping_adress_page(self)
@@ -64,7 +61,6 @@ class TestDeliveryForm(unittest.TestCase):
         delivery_adress_no_lastname_assert(self)
 
     def test_delivery_adress_no_phone_number(self):
-        driver = self.driver
         login_to_account(self)
         goto_account_data(self)
         goto_shipping_adress_page(self)
@@ -81,7 +77,6 @@ class TestDeliveryForm(unittest.TestCase):
 
     def test_delivery_adress_no_adress(self):
         # error occurs only with no input in first row
-        driver = self.driver
         login_to_account(self)
         goto_account_data(self)
         goto_shipping_adress_page(self)
@@ -97,7 +92,6 @@ class TestDeliveryForm(unittest.TestCase):
         delivery_adress_no_adress_assert(self)
 
     def test_delivery_adress_no_city(self):
-        driver = self.driver
         login_to_account(self)
         goto_account_data(self)
         goto_shipping_adress_page(self)

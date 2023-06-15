@@ -22,13 +22,11 @@ class TestAccountCreatingForm(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_create_account_page_loads_up(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         create_new_account_page_load_up_assert(self)
 
     def test_creating_account_no_name(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_lastname(self)
@@ -39,7 +37,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_no_name_assert(self)
 
     def test_creating_account_no_lastname(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -50,7 +47,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_no_lastname_assert(self)
 
     def test_creating_account_no_mail(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -61,7 +57,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_no_mail_assert(self)
 
     def test_creating_account_password_to_short(self):
-        driver = self.driver
         # wait = self.wait
         goto_main_page(self)
         goto_create_account_page(self)
@@ -71,7 +66,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_fill_password_too_short(self)
 
     def test_creating_account_password_no_special_char(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -82,7 +76,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_password_no_special_char_assert(self)
 
     def test_creating_account_password_not_match(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -95,7 +88,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_password_not_match_assert(self)
 
     def test_creating_account_password_weak(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -106,7 +98,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_password_weak_assert(self)
 
     def test_creating_account_password_medium(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -117,7 +108,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_password_medium_assert(self)
 
     def test_creating_account_password_strong(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -128,7 +118,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_password_strong_assert(self)
 
     def test_creating_account_password_very_strong(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)
@@ -139,7 +128,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         account_page_password_very_hard_assert(self)
 
     def test_creating_account_but_mail_already_existing(self):
-        driver = self.driver
         goto_main_page(self)
         goto_create_account_page(self)
         account_page_fill_firstname(self)

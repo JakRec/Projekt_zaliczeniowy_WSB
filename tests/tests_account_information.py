@@ -1,5 +1,4 @@
 # zbior testow do strony z inforamcjami o koncie
-
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -23,7 +22,6 @@ class TestAccountInformations(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_account_informations_page_load_up(self):
-        driver = self.driver
         goto_main_page(self)
         login_to_account(self)
         goto_account_data(self)
@@ -31,7 +29,6 @@ class TestAccountInformations(unittest.TestCase):
         account_informations_page_load_up_assert(self)
 
     def test_account_informations_page_change_mail_form_shows_up(self):
-        driver = self.driver
         goto_main_page(self)
         login_to_account(self)
         goto_account_data(self)
@@ -40,7 +37,6 @@ class TestAccountInformations(unittest.TestCase):
         account_informations_page_change_mail_assert(self)
 
     def test_account_informations_page_change_password_form_shows_up(self):
-        driver = self.driver
         goto_main_page(self)
         login_to_account(self)
         goto_account_data(self)
@@ -49,7 +45,6 @@ class TestAccountInformations(unittest.TestCase):
         account_informations_page_change_password_assert(self)
 
     def test_account_informations_page_change_mail_and_password_form_shows_up(self):
-        driver = self.driver
         goto_main_page(self)
         login_to_account(self)
         goto_account_data(self)

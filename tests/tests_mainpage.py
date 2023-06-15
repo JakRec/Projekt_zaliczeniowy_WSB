@@ -24,7 +24,6 @@ class TestAccountCreatingForm(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_website_opening(self):
-        driver = self.driver
         goto_main_page(self)
         main_page_title_assert(self)
 

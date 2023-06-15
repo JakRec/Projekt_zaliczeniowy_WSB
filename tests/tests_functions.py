@@ -631,3 +631,21 @@ def item_pages_are_full_except_last_assert(
         assert item_page_find_how_many_items_for_sale_max(
             self
         ) == item_page_find_all_items_for_sale(self)
+
+
+def sign_in_page_logout(self):
+    driver = self.driver
+    driver.find_element(
+        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/span/button"
+    ).click()
+    driver.find_element(
+        By.XPATH, "/html/body/div[1]/header/div[1]/div/ul/li[2]/div/ul/li[3]/a"
+    ).click()
+
+
+def sign_in_page_sign_in_and_logout_assert(self):
+    driver = self.driver
+    assert (
+        driver.find_element(By.XPATH, '//*[@id="maincontent"]/div[1]/h1/span')
+        == "You are signed out"
+    )

@@ -23,13 +23,11 @@ class TestGearPage(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_gear_bags_page_shows_up(self):
-        driver = self.driver
         goto_main_page(self)
         goto_gear_bags(self)
         gear_bags_page_shows_up_assert(self)
 
     def test_gear_bags_pages_are_full_except_last(self):
-        driver = self.driver
         goto_main_page(self)
         goto_gear_bags(self)
         sleep(2)
