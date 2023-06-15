@@ -10,7 +10,7 @@ from selenium.webdriver.support.select import Select
 from time import sleep
 import tests_credentials
 import tests_site_locators
-from tests_functions import *
+import tests_functions as function
 
 
 class TestGearPage(unittest.TestCase):
@@ -23,16 +23,16 @@ class TestGearPage(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_gear_bags_page_shows_up(self):
-        goto_main_page(self)
-        goto_gear_bags(self)
-        gear_bags_page_shows_up_assert(self)
+        function.goto_main_page(self)
+        function.goto_gear_bags(self)
+        function.gear_bags_page_shows_up_assert(self)
 
     def test_gear_bags_pages_are_full_except_last(self):
-        goto_main_page(self)
-        goto_gear_bags(self)
+        function.goto_main_page(self)
+        function.goto_gear_bags(self)
         sleep(2)
-        output = item_pages_are_full_except_last_test(self)
-        item_pages_are_full_except_last_assert(
+        output = function.item_pages_are_full_except_last_test(self)
+        function.item_pages_are_full_except_last_assert(
             self, output[0], output[1], output[2], output[3]
         )
 

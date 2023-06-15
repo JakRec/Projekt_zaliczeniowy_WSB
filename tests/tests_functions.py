@@ -3,7 +3,6 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.select import Select
@@ -161,7 +160,6 @@ def account_page_fill_password_too_short(self):
     for password_length in range(7):
         driver.find_element(By.XPATH, self.locators.register_password_id).send_keys("a")
         sleep(0.5)
-        password_length += 1
         if (
             driver.find_element(
                 By.XPATH, self.locators.create_account_password_error_id

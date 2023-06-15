@@ -2,14 +2,13 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.select import Select
 from time import sleep
 import tests_credentials
 import tests_site_locators
-from tests_functions import *
+import tests_functions as function
 
 
 class TestAccountCreatingForm(unittest.TestCase):
@@ -22,27 +21,27 @@ class TestAccountCreatingForm(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_sign_in_page_load_up(self):
-        goto_main_page(self)
-        goto_sign_in_page(self)
-        sign_in_page_load_up_assert(self)
+        function.goto_main_page(self)
+        function.goto_sign_in_page(self)
+        function.sign_in_page_load_up_assert(self)
 
     def test_sign_in_to_existing_account(self):
-        goto_main_page(self)
-        goto_sign_in_page(self)
-        sign_in_page_fill_in_mail(self)
-        sign_in_page_fill_in_password(self)
-        sign_in_page_sign_in_button_click(self)
+        function.goto_main_page(self)
+        function.goto_sign_in_page(self)
+        function.sign_in_page_fill_in_mail(self)
+        function.sign_in_page_fill_in_password(self)
+        function.sign_in_page_sign_in_button_click(self)
         sleep(4)
-        sign_in_to_existing_account_assert(self)
+        function.sign_in_to_existing_account_assert(self)
 
     def test_sign_in_and_logout(self):
-        goto_main_page(self)
-        goto_sign_in_page(self)
-        sign_in_page_fill_in_mail(self)
-        sign_in_page_fill_in_password(self)
-        sign_in_page_sign_in_button_click(self)
-        sign_in_page_logout(self)
-        sign_in_page_sign_in_and_logout_assert(self)
+        function.goto_main_page(self)
+        function.goto_sign_in_page(self)
+        function.sign_in_page_fill_in_mail(self)
+        function.sign_in_page_fill_in_password(self)
+        function.sign_in_page_sign_in_button_click(self)
+        function.sign_in_page_logout(self)
+        function.sign_in_page_sign_in_and_logout_assert(self)
 
 
 def tearDown(self):

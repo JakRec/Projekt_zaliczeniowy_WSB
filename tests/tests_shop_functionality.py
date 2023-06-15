@@ -4,14 +4,12 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
-# from selenium.webdriver.support import expected_conditions as EC biblioteka na ten moment nie uzywana
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.select import Select
 from time import sleep
 import tests_credentials
 import tests_site_locators
-from tests_functions import *
+import tests_functions as function
 
 
 class TestShopFunctionality(unittest.TestCase):
@@ -24,13 +22,13 @@ class TestShopFunctionality(unittest.TestCase):
         self.locators = tests_site_locators
 
     def test_cart_adding(self):
-        login_to_account(self)
-        open_cart(self)
+        function.login_to_account(self)
+        function.open_cart(self)
         sleep(1)
-        cart_clean_cart(self)
-        main_page_add_to_cart_blue_shirt(self)
+        function.cart_clean_cart(self)
+        function.main_page_add_to_cart_blue_shirt(self)
         sleep(3)
-        cart_adding_item_assert(self)
+        function.cart_adding_item_assert(self)
 
 
 def tearDown(self):
