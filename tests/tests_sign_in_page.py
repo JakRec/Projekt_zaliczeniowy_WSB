@@ -11,7 +11,7 @@ import tests_site_locators
 import tests_functions as function
 
 
-class TestAccountCreatingForm(unittest.TestCase):
+class TestSignIn(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.action = webdriver.ActionChains(self.driver)
@@ -31,7 +31,7 @@ class TestAccountCreatingForm(unittest.TestCase):
         function.sign_in_page_fill_in_mail(self)
         function.sign_in_page_fill_in_password(self)
         function.sign_in_page_sign_in_button_click(self)
-        sleep(4)
+        sleep(2)
         function.sign_in_to_existing_account_assert(self)
 
     def test_sign_in_and_logout(self):
@@ -41,6 +41,7 @@ class TestAccountCreatingForm(unittest.TestCase):
         function.sign_in_page_fill_in_password(self)
         function.sign_in_page_sign_in_button_click(self)
         function.sign_in_page_logout(self)
+        sleep(2)
         function.sign_in_page_sign_in_and_logout_assert(self)
 
 

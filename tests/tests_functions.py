@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.select import Select
 from time import sleep
 import tests_credentials
-import tests_site_locators
+import tests_site_locators as locators
 
 
 def goto_main_page(self):
@@ -69,12 +69,12 @@ def goto_account_data(self):
 
 def create_new_account_page_load_up_assert(self):
     driver = self.driver
-    assert driver.title() == self.locators.create_account_page_title
+    assert driver.title == self.locators.create_account_page_title
 
 
 def sign_in_page_load_up_assert(self):
     driver = self.driver
-    assert driver.title() == self.locators.sign_in_page_title
+    assert driver.title == self.locators.sign_in_page_title
 
 
 def goto_shipping_adress_page(self):
@@ -508,7 +508,7 @@ def goto_gear_bags(self):
 
 def gear_bags_page_shows_up_assert(self):
     driver = self.driver
-    assert driver.title == self.locators.gear_bags_page_titl
+    assert driver.title == self.locators.gear_bags_page_title
 
 
 def item_page_find_how_many_items_for_sale_max(self):
@@ -640,6 +640,6 @@ def sign_in_page_logout(self):
 def sign_in_page_sign_in_and_logout_assert(self):
     driver = self.driver
     assert (
-        driver.find_element(By.XPATH, '//*[@id="maincontent"]/div[1]/h1/span')
+        driver.find_element(By.XPATH, '//*[@id="maincontent"]/div[1]/h1/span').text
         == "You are signed out"
     )

@@ -13,7 +13,7 @@ import tests_site_locators
 import tests_functions as function
 
 
-class TestAccountCreatingForm(unittest.TestCase):
+class TestMainpage(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.action = webdriver.ActionChains(self.driver)
