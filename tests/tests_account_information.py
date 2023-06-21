@@ -1,4 +1,4 @@
-# zbior testow do strony z inforamcjami o koncie
+# account information tests https://magento.softwaretestingboard.com/customer/account/
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By

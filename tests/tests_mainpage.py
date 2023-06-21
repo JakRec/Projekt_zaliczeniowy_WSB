@@ -1,6 +1,5 @@
-# zbior testow dla strony glownej
+# mainpage tests https://magento.softwaretestingboard.com/
 
-# wczytanie bibliotek
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By

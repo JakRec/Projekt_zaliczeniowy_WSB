@@ -1,4 +1,4 @@
-# zbior testow dla podstrony gear/bags
+# tests for gear/bags page https://magento.softwaretestingboard.com/gear/bags.html
 
 import unittest
 from selenium import webdriver

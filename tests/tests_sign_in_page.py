@@ -1,4 +1,4 @@
-# zbior testow dla podstrony logowania
+# tests for sign in page https://magento.softwaretestingboard.com/customer/account/login/referer/aHR0cHM6Ly9tYWdlbnRvLnNvZnR3YXJldGVzdGluZ2JvYXJkLmNvbS8%2C/
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By

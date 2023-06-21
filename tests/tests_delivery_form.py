@@ -1,4 +1,4 @@
-# zbior testow formularza do wysylki na stronie magento.softwaretestingboard.com/
+# delivery adress tests https://magento.softwaretestingboard.com/customer/address/new/
 
 # wczytanie bibliotek
 import unittest

@@ -1,4 +1,4 @@
-# funkcje wykorzystywane w testach
+# functions essential for tests
 
 import unittest
 from selenium import webdriver
@@ -524,6 +524,8 @@ def item_page_find_all_items_for_sale(self):
 
 
 def gear_bags_page_is_full_assert(self):
+    # checks if there are 12 (standard view option) items per page
+    # if more than one page checks if all pages are full for display (12 items) and rest of items are presented on last page
     if item_page_find_how_many_items_for_sale_max(self) >= 12:
         assert item_page_find_all_items_for_sale(self) == 12
     else:
@@ -541,6 +543,9 @@ def gear_bags_page_goto_next_page(self):
 
 
 def gear_bags_pages_are_full_except_last_test_and_assert(self):
+    # checks if there are 12 (standard view option) items per page
+    # if more than one page checks if all pages are full for display (12 items) and rest of items are presented on last page
+    # also checks if all items are present on pages
     if item_page_find_how_many_items_for_sale_max(self) >= 12:
         predicted_last_page_items_number = (
             item_page_find_how_many_items_for_sale_max(self) % 12
@@ -576,6 +581,9 @@ def gear_bags_pages_are_full_except_last_test_and_assert(self):
 
 
 def item_pages_are_full_except_last_test(self):
+    # checks if there are 12 (standard view option) items per page
+    # if more than one page checks if all pages are full for display (12 items) and rest of items are presented on last page
+    # also checks if all items are present on pages
     max_items_on_page = item_page_find_how_many_items_for_sale_max(self)
     predicted_last_page_items_number = (
         item_page_find_how_many_items_for_sale_max(self) % 12

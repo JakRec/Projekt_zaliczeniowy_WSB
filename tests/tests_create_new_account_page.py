@@ -1,4 +1,4 @@
-# wczytanie bibliotek
+# create new account tests https://magento.softwaretestingboard.com/customer/account/create/
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By

@@ -1,3 +1,4 @@
+# main test launching file
 import unittest
 from tests_account_information import TestAccountInformation
 from tests_create_new_account_page import TestAccountCreatingForm

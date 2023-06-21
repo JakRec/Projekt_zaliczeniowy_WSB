@@ -1,6 +1,4 @@
-# zbior testow dla akcji sklepu
-
-# wczytanie bibliotek
+# tests for shop functionalities https://magento.softwaretestingboard.com/
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By

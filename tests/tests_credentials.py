@@ -1,10 +1,10 @@
-# dane potrzebne do testow
+# essential credentials for tests
 
 from faker import Faker
 
 fake = Faker(locale="pl_PL")
 
-# ponizej dane generowane losowo, dla formularza tworzenia nowego konta
+# randomly generated credentials for creating new account tests
 
 
 def test_firstname():
@@ -19,7 +19,7 @@ def test_mail():
     return fake.email()
 
 
-# ponizej dane stale, dzialajace
+# not random, valid credentials
 
 
 def test_password(type):

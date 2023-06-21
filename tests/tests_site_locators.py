@@ -1,4 +1,4 @@
-# lokatory dla testow
+# locators used in tests
 
 main_page_adress = "https://magento.softwaretestingboard.com/"
 register_firstname_id = '//input[@id="firstname"]'
